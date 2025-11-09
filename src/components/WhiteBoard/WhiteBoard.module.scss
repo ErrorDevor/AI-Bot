@@ -1,0 +1,59 @@
+.white_board_section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  background-color: #ffffff;
+}
+
+.white_board_motion {
+  width: 100%;
+  height: 100%;
+}
+
+.white_board_background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    circle at center,
+    rgba(17, 49, 93, 0.18) 0.15rem,
+    transparent 0.15rem
+  );
+  background-size: 48px 48px;
+}
+
+.white_board_content_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.white_board_content {
+  position: relative;
+  transform-origin: center center;
+  transition: transform 0.15s ease-out;
+}
+
+.canvas_area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas_area,
+.white_board_content {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}

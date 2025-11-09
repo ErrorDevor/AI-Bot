@@ -1,0 +1,13 @@
+.grid {
+  position: relative;
+  column-count: 6;
+  column-gap: 1.6rem;
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.grid > * {
+  margin-bottom: 1.6rem;
+  break-inside: avoid;
+}

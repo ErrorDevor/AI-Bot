@@ -1,0 +1,39 @@
+.main_wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.leftside_div {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: fit-content;
+  z-index: 1;
+}
+
+.composer_bar_div {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: fit-content;
+  z-index: 1;
+}
+
+.action_bar_div {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.6rem;
+  width: fit-content;
+  height: fit-content;
+   z-index: 1;
+}
+
+.whiteboard_div {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}

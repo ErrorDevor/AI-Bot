@@ -1,66 +1,91 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { Wrapper } from "@/components/Wrapper/Wrapper";
+import { LeftSideBar } from "@/widgets/LeftSideBar/LeftSideBar";
+import { ComposerBar } from "@/widgets/ComposerBar/ComposerBar";
+import { ActionBar } from "@/widgets/ActionBar/ActionBar";
+import { WhiteBoard } from "@/components/WhiteBoard/WhiteBoard";
+
+import { motion } from "motion/react";
+
+import css from "./Main.module.scss";
+
+const leftsideImage = "/images/LeftSideBar.png";
+const ComposerImage = "/images/Composer.png";
+
+const mockData = [
+  "/images/Gallery/img1.png",
+  "/images/Gallery/img2.png",
+  "/images/Gallery/img3.jpg",
+  "/images/Gallery/img4.png",
+  "/images/Gallery/img5.jpg",
+  "/images/Gallery/img6.png",
+  "/images/Gallery/img7.png",
+  "/images/Gallery/img8.png",
+  "/images/Gallery/img9.png",
+  "/images/Gallery/img10.jpg",
+  "/images/Gallery/img11.png",
+  "/images/Gallery/img12.png",
+  "/images/Gallery/img13.png",
+  "/images/Gallery/img14.png",
+  "/images/Gallery/img15.png",
+  "/images/Gallery/img16.png",
+  "/images/Gallery/img17.png",
+  "/images/Gallery/img18.jpg",
+  "/images/Gallery/img19.jpg",
+  "/images/Gallery/img20.png",
+  "/images/Gallery/img21.jpg",
+  "/images/Gallery/img22.jpg",
+  "/images/Gallery/img23.png",
+];
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main>
+      <Wrapper className={css.main_wrapper}>
+        <div className={css.leftside_div}>
+          <motion.div
+            initial={{ x: -50, opacity: 0, filter: "blur(10px)" }}
+            animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+            transition={{
+              duration: 0.8,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <LeftSideBar srcImage={leftsideImage} />
+          </motion.div>
         </div>
-      </main>
-    </div>
+
+        <div className={css.composer_bar_div}>
+          <motion.div
+            initial={{ y: 50, opacity: 0, filter: "blur(10px)" }}
+            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+          >
+            <ComposerBar srcImage={ComposerImage} />
+          </motion.div>
+        </div>
+
+        <div className={css.action_bar_div}>
+          <motion.div
+            initial={{ y: -50, opacity: 0, filter: "blur(10px)" }}
+            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+            transition={{
+              delay: 0.1,
+              duration: 0.8,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+          >
+            <ActionBar />
+          </motion.div>
+        </div>
+
+        <WhiteBoard className={css.whiteboard_div} images={mockData}/>
+      </Wrapper>
+    </main>
   );
 }

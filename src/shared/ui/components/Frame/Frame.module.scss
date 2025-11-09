@@ -1,0 +1,37 @@
+.frame {
+  display: block;
+  position: relative;
+  width: 100%;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  z-index: 0;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(35, 130, 255, 0.2);
+  border: 0.1rem solid rgba(35, 130, 255, 1);
+  border-radius: 0.6rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.frame.selected {
+  z-index: 10;
+}
