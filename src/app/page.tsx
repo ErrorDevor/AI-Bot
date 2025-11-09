@@ -5,6 +5,7 @@ import { LeftSideBar } from "@/widgets/LeftSideBar/LeftSideBar";
 import { ComposerBar } from "@/widgets/ComposerBar/ComposerBar";
 import { ActionBar } from "@/widgets/ActionBar/ActionBar";
 import { WhiteBoard } from "@/components/WhiteBoard/WhiteBoard";
+import { Folders } from "@/widgets/Folders/Folder";
 
 import { motion } from "motion/react";
 
@@ -37,6 +38,15 @@ const mockData = [
   "/images/Gallery/img21.jpg",
   "/images/Gallery/img22.jpg",
   "/images/Gallery/img23.png",
+  "/images/Gallery/img1.png",
+  "/images/Gallery/img2.png",
+  "/images/Gallery/img3.jpg",
+  "/images/Gallery/img4.png",
+  "/images/Gallery/img5.jpg",
+  "/images/Gallery/img6.png",
+  "/images/Gallery/img7.png",
+  "/images/Gallery/img8.png",
+  "/images/Gallery/img9.png",
 ];
 
 export default function Home() {
@@ -75,7 +85,7 @@ export default function Home() {
             initial={{ y: -50, opacity: 0, filter: "blur(10px)" }}
             animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
             transition={{
-              delay: 0.1,
+              delay: 2,
               duration: 0.8,
               ease: [0.25, 0.1, 0.25, 1],
             }}
@@ -84,7 +94,21 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <WhiteBoard className={css.whiteboard_div} images={mockData}/>
+        <WhiteBoard className={css.whiteboard_div} images={mockData} />
+
+        <div className={css.folders_div}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              delay: 2.2,
+              duration: 0.8,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+          >
+            <Folders folderName="/Favorites" />
+          </motion.div>
+        </div>
       </Wrapper>
     </main>
   );

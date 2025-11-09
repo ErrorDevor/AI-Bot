@@ -1,0 +1,105 @@
+.folders {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  height: fit-content;
+}
+
+.folders_name {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  width: fit-content;
+  height: 3.2rem;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 0.6rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+
+  p {
+    font-size: 2rem;
+    font-weight: 350;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #11315d;
+  }
+}
+
+.folders_name::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.6rem;
+  padding: 0.1rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(34, 106, 205, 0.05) 0%,
+    rgba(34, 106, 205, 0.2) 39%,
+    rgba(34, 106, 205, 0.05) 69%,
+    rgba(34, 106, 205, 0.5) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.dropdown_wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 0.6rem;
+  cursor: pointer;
+
+  &:hover .arrow_icon {
+    animation: shake 0.5s ease-in-out both;
+  }
+}
+
+.dropdown_wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.6rem;
+  padding: 0.1rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(34, 106, 205, 0.05) 0%,
+    rgba(34, 106, 205, 0.2) 39%,
+    rgba(34, 106, 205, 0.05) 69%,
+    rgba(34, 106, 205, 0.5) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(0.1rem);
+  }
+  60% {
+    transform: translateY(-0.1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

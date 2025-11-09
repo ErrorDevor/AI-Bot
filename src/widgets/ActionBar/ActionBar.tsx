@@ -21,7 +21,7 @@ const leftIconsArray = [
 const rightIconsArray = [
   "/icons/heart-slash.svg",
   "/icons/folder-add.svg",
-  "/icons/gallery-add.svg",
+  // "/icons/gallery-add.svg",
 ];
 
 export const ActionBar: React.FC<ActionBarProps> = ({ className }) => {
@@ -31,7 +31,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({ className }) => {
         <ul className={css.left_side}>
           {leftIconsArray.map((icons, index) => (
             <li key={index} className={css.icon_block}>
-              <Image.Default src={icons} />
+              <Image.Default src={icons} className={css.icons_image}/>
             </li>
           ))}
         </ul>
@@ -39,7 +39,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({ className }) => {
         <ul className={css.right_side}>
           {rightIconsArray.map((icons, index) => (
             <li key={index} className={css.icon_block}>
-              <Image.Default src={icons} />
+              <Image.Default src={icons} className={css.icons_image}/>
             </li>
           ))}
         </ul>

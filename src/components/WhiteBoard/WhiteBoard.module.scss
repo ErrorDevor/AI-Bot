@@ -7,11 +7,6 @@
   background-color: #ffffff;
 }
 
-.white_board_motion {
-  width: 100%;
-  height: 100%;
-}
-
 .white_board_background {
   position: absolute;
   inset: 0;
@@ -23,17 +18,8 @@
     rgba(17, 49, 93, 0.18) 0.15rem,
     transparent 0.15rem
   );
-  background-size: 48px 48px;
-}
-
-.white_board_content_wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
+  background-size: 4.8rem 4.8rem;
+  height: 1000%;
 }
 
 .white_board_content {

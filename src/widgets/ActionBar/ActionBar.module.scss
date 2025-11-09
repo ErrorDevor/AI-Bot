@@ -1,5 +1,5 @@
 .action_bar {
-  width: 31.2rem;
+  width: fit-content;
   height: 5.6rem;
   padding: 0.4rem;
   border-radius: 2rem;
@@ -76,5 +76,24 @@
 
   &:hover {
     background-color: rgba(34, 106, 205, 0.05);
+  }
+
+  &:hover .icons_image {
+    animation: shake 0.5s ease-in-out both;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(0.05rem);
+  }
+  60% {
+    transform: translateY(-0.05rem);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

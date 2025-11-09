@@ -13,27 +13,49 @@ interface WhiteboardState {
   toggleSelect: (id: number) => void;
   clearSelection: () => void;
   setSelectionButton?: (btn: number) => void;
+  setSelection: (ids: number[]) => void;
 }
 
 export const whiteboardStore = create<WhiteboardState>((set, get) => ({
   selection: { selectedIds: new Set(), isDragging: false, selectionRect: null },
   selectSingle: (id) =>
     set((state) => ({
-      selection: { ...state.selection, selectedIds: new Set([id]), pointerButton: undefined },
+      selection: {
+        ...state.selection,
+        selectedIds: new Set([id]),
+        pointerButton: undefined,
+      },
     })),
   toggleSelect: (id) =>
     set((state) => {
       const newSet = new Set(state.selection.selectedIds);
       if (newSet.has(id)) newSet.delete(id);
       else newSet.add(id);
-      return { selection: { ...state.selection, selectedIds: newSet, pointerButton: undefined } };
+      return {
+        selection: {
+          ...state.selection,
+          selectedIds: newSet,
+          pointerButton: undefined,
+        },
+      };
     }),
   clearSelection: () =>
     set((state) => ({
-      selection: { ...state.selection, selectedIds: new Set(), pointerButton: undefined },
+      selection: {
+        ...state.selection,
+        selectedIds: new Set(),
+        pointerButton: undefined,
+      },
     })),
   setSelectionButton: (btn) =>
     set((state) => ({
       selection: { ...state.selection, pointerButton: btn },
+    })),
+  setSelection: (ids) =>
+    set((state) => ({
+      selection: {
+        ...state.selection,
+        selectedIds: new Set(ids),
+      },
     })),
 }));
