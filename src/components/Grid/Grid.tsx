@@ -9,7 +9,7 @@ import React, {
 
 import clsx from "clsx";
 import { motion } from "motion/react";
-import { Frame } from "../Frame/Frame";
+import { Frame } from "@/shared/ui/components/Frame/Frame";
 import { whiteboardStore } from "@/utils/state/state";
 
 import css from "./Grid.module.scss";
@@ -26,6 +26,7 @@ interface GridProps {
     visible: boolean;
   };
   frameRefs?: React.RefObject<Map<number, HTMLDivElement>>;
+  containerRef?: React.RefObject<HTMLDivElement>;
 }
 
 const containerVariants = {
@@ -40,11 +41,21 @@ const containerVariants = {
 };
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
-  ({ images = [], className, onFrameLoad, frameRefs, selectionBox }, ref) => {
+  (
+    {
+      images = [],
+      className,
+      onFrameLoad,
+      frameRefs,
+      selectionBox,
+      containerRef,
+    },
+    ref
+  ) => {
     const internalRef = useRef<HTMLDivElement>(null);
     const localFrameRefs = useRef<Map<number, HTMLDivElement>>(new Map());
     const frames = frameRefs || localFrameRefs;
-    const { selection, setSelection, clearSelection } = whiteboardStore();
+    const { selection, setSelection } = whiteboardStore();
 
     useImperativeHandle(ref, () => internalRef.current as HTMLDivElement);
 
@@ -54,10 +65,11 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
     };
 
     useEffect(() => {
-      if (!selectionBox || !frames.current) return;
-      if (!selectionBox.visible) return;
+      if (!frames.current || !containerRef?.current) return;
 
-      const selectedIds: number[] = [];
+      if (!selectionBox?.visible) return;
+
+      const containerRect = containerRef.current.getBoundingClientRect();
 
       const selectionRect = {
         left: selectionBox.x,
@@ -66,16 +78,16 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
         bottom: selectionBox.y + selectionBox.height,
       };
 
+      const selectedIds: number[] = [];
+
       frames.current.forEach((el, id) => {
         const rect = el.getBoundingClientRect();
-        const parentRect = internalRef.current?.getBoundingClientRect();
-        if (!parentRect) return;
 
         const frameRect = {
-          left: rect.left - parentRect.left,
-          top: rect.top - parentRect.top,
-          right: rect.right - parentRect.left,
-          bottom: rect.bottom - parentRect.top,
+          left: rect.left - containerRect.left,
+          top: rect.top - containerRect.top,
+          right: rect.right - containerRect.left,
+          bottom: rect.bottom - containerRect.top,
         };
 
         const intersects =
@@ -87,14 +99,24 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
         if (intersects) selectedIds.push(id);
       });
 
-      if (selectedIds.length) setSelection(selectedIds);
-      else clearSelection();
-    }, [selectionBox]);
+      setSelection(selectedIds.length ? selectedIds : []);
+    }, [
+      selectionBox?.x,
+      selectionBox?.y,
+      selectionBox?.width,
+      selectionBox?.height,
+      selectionBox?.visible,
+    ]);
 
     const handleFrameSelect = (index: number, e: React.MouseEvent) => {
+      e.stopPropagation();
       const { toggleSelect, selectSingle } = whiteboardStore.getState();
-      if (e.ctrlKey || e.metaKey) toggleSelect(index);
-      else selectSingle(index);
+
+      if (e.ctrlKey || e.metaKey) {
+        toggleSelect(index);
+      } else {
+        selectSingle(index);
+      }
     };
 
     return (

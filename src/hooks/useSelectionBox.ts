@@ -23,8 +23,9 @@ export function useSelectionBox(
 
   const start = useRef<{ x: number; y: number } | null>(null);
   const isSpacePressed = useRef(false);
+  const lastSelected = useRef<Set<number>>(new Set());
 
-  const { clearSelection, toggleSelect } = whiteboardStore.getState();
+  const { clearSelection, setSelection } = whiteboardStore.getState();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -43,35 +44,74 @@ export function useSelectionBox(
     };
   }, []);
 
+  const isEventInsideFrame = (e: PointerEvent) => {
+    if (!frameRefs?.current) return false;
+    const target = e.target as Node | null;
+    if (!target) return false;
+
+    for (const el of frameRefs.current.values()) {
+      if (!el) continue;
+      if (el === target || el.contains(target)) return true;
+    }
+
+    if ((e as any).composedPath) {
+      try {
+        const path = (e as any).composedPath() as EventTarget[];
+        for (const node of path) {
+          if (node instanceof Node) {
+            for (const el of frameRefs.current.values()) {
+              if (!el) continue;
+              if (el === node || el.contains(node as Node)) return true;
+            }
+          }
+        }
+      } catch {
+      }
+    }
+
+    return false;
+  };
+
   const onPointerDown = useCallback(
     (e: PointerEvent) => {
       if (e.button !== 0) return;
       if (isSpacePressed.current) return;
       if (!containerRef.current) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      start.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      if (isEventInsideFrame(e)) {
+        return;
+      }
 
+      const container = containerRef.current;
+      const rect = container.getBoundingClientRect();
+
+      const x = e.clientX - rect.left + container.scrollLeft;
+      const y = e.clientY - rect.top + container.scrollTop;
+
+      start.current = { x, y };
+      lastSelected.current.clear();
       clearSelection();
 
       setBox({
-        x: start.current.x,
-        y: start.current.y,
+        x,
+        y,
         width: 0,
         height: 0,
         visible: true,
       });
     },
-    [containerRef]
+    [containerRef, frameRefs]
   );
 
   const onPointerMove = useCallback(
     (e: PointerEvent) => {
       if (!start.current || !containerRef.current) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const currentX = e.clientX - rect.left;
-      const currentY = e.clientY - rect.top;
+      const container = containerRef.current;
+      const rect = container.getBoundingClientRect();
+
+      const currentX = e.clientX - rect.left + container.scrollLeft;
+      const currentY = e.clientY - rect.top + container.scrollTop;
 
       const x = Math.min(start.current.x, currentX);
       const y = Math.min(start.current.y, currentY);
@@ -79,19 +119,20 @@ export function useSelectionBox(
       const height = Math.abs(start.current.y - currentY);
 
       const selectionRect = { x, y, width, height };
-
       setBox({ ...selectionRect, visible: true });
+
+      const selected = new Set<number>();
 
       frameRefs.current.forEach((el, idx) => {
         if (!el) return;
         const frameRect = el.getBoundingClientRect();
-        const cRect = containerRef.current!.getBoundingClientRect();
+        const cRect = container.getBoundingClientRect();
 
         const relRect = {
-          left: frameRect.left - cRect.left,
-          top: frameRect.top - cRect.top,
-          right: frameRect.right - cRect.left,
-          bottom: frameRect.bottom - cRect.top,
+          left: frameRect.left - cRect.left + container.scrollLeft,
+          top: frameRect.top - cRect.top + container.scrollTop,
+          right: frameRect.right - cRect.left + container.scrollLeft,
+          bottom: frameRect.bottom - cRect.top + container.scrollTop,
         };
 
         const selRight = selectionRect.x + selectionRect.width;
@@ -103,8 +144,18 @@ export function useSelectionBox(
           relRect.top < selBottom &&
           relRect.bottom > selectionRect.y;
 
-        if (intersects) toggleSelect(idx);
+        if (intersects) selected.add(idx);
       });
+
+      const prev = lastSelected.current;
+      const changed =
+        selected.size !== prev.size ||
+        [...selected].some((id) => !prev.has(id));
+
+      if (changed) {
+        lastSelected.current = selected;
+        setSelection([...selected]);
+      }
     },
     [containerRef, frameRefs]
   );
@@ -127,7 +178,7 @@ export function useSelectionBox(
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
     };
-  }, [onPointerDown, onPointerMove, onPointerUp, containerRef]);
+  }, [onPointerDown, onPointerMove, onPointerUp, containerRef, frameRefs]);
 
   return box;
 }

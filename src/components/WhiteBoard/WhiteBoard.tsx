@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 
 import clsx from "clsx";
-import { Grid } from "@/shared/ui/components/Grid/Grid";
+import { Grid } from "@/components/Grid/Grid";
 import { useZoom, usePan, useScroll, useSelectionBox } from "@/hooks";
 import {
   useWheelZoom,

@@ -44,3 +44,26 @@
   left: 18.4rem;
   z-index: 10;
 }
+
+.info_div {
+ position: absolute;
+  top: 50%;
+  right: 1.6rem;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.info {
+ 
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: fit-content;
+  height: fit-content;
+  padding: 1.6rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid #11315D;
+  background-color: #ffffff;
+  color: #11315D;
+  font-size: 1.6rem;
+}

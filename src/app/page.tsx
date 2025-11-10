@@ -109,6 +109,36 @@ export default function Home() {
             <Folders folderName="/Favorites" />
           </motion.div>
         </div>
+
+        <div className={css.info_div}>
+          <motion.div
+            initial={{ x: 50, opacity: 0, filter: "blur(10px)" }}
+            animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+            transition={{
+              delay: 3,
+              duration: 0.8,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+          >
+            <div className={css.info}>
+              <p>
+                <kbd>Ctrl</kbd> + <kbd>Wheel</kbd> — Zoom
+              </p>
+              <p>
+                <kbd>Wheel</kbd> — Scroll vertically
+              </p>
+              <p>
+                <kbd>Space</kbd> + <kbd>Drag</kbd> — Pan
+              </p>
+              <p>
+                <kbd>Middle Mouse Drag</kbd> — Pan
+              </p>
+              <p>
+                <kbd>Click</kbd> + <kbd>Drag</kbd> — Select
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </Wrapper>
     </main>
   );
