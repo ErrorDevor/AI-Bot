@@ -20,7 +20,6 @@ interface FrameProps {
   onRef?: (el: HTMLDivElement | null) => void;
   minDelayMs?: number;
   maxWaitMs?: number;
-  registerFrame: (id: number, el: HTMLDivElement) => void;
 }
 
 export const Frame: React.FC<FrameProps> = ({
@@ -33,13 +32,8 @@ export const Frame: React.FC<FrameProps> = ({
   onRef,
   minDelayMs = 2000,
   maxWaitMs = 2000,
-  registerFrame
 }) => {
   const elRef = useRef<HTMLDivElement | null>(null);
-
-  // --- Подписка на выбранные элементы whiteboard
-  const selectedIds = whiteboardStore((state) => state.selection.selectedIds);
-  const isSelected = selectedIds.has(id);
 
   // --- Custom хук загрузки изображения
   const { showImage, handleNativeLoad, handleNativeError } = useImageLoader(

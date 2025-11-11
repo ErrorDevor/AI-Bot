@@ -20,6 +20,7 @@ interface Params {
   clusterFrameRefs: React.RefObject<
     Map<number, React.RefObject<Map<number, HTMLDivElement>>>
   >; // --- реф для хранения per-cluster ref-карт
+  // isCtrlPressed: React.RefObject<boolean>;
 }
 
 export const createClusters = ({
@@ -28,6 +29,7 @@ export const createClusters = ({
   frameRefs,
   selectionBox,
   clusterFrameRefs,
+  // isCtrlPressed
 }: Params) => {
   return folders.map((folder, index) => {
     const top = TOP;
@@ -45,6 +47,7 @@ export const createClusters = ({
         frameRefs={frameRefs}
         images={images}
         selectionBox={selectionBox}
+        // isCtrlPressed={isCtrlPressed}
         style={{
           top: `${top}px`,
           left: `${left}px`,

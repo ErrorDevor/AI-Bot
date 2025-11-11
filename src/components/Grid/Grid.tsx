@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useRef, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useState,
+} from "react";
 import clsx from "clsx";
 import { Frame } from "@/shared/ui/components/Frame/Frame";
 import { whiteboardStore } from "@/utils/state/state";
 
 import { useFrameRefs } from "./lib/useFrameRefs";
-import { useSelectionBox } from "./lib/useSelectionBox";
 import { COLUMNS, columnOffsets } from "./lib/gridConfig";
 
 import css from "./Grid.module.scss";
-
-// --- Grid — визуальная сетка, содержащая фреймы (реф-изображения).
 
 interface SelectionBoxType {
   x: number;
@@ -28,41 +31,28 @@ interface GridProps {
   onFrameLoad?: () => void;
   selectionBox?: SelectionBoxType;
   frameRefs?: React.RefObject<Map<number, HTMLDivElement>>;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  containerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
-  (
-    {
-      clusterId,
-      images = [],
-      className,
-      onFrameLoad,
-      frameRefs,
-      selectionBox,
-      containerRef,
-    },
-    ref
-  ) => {
+  ({ clusterId, images = [], className, onFrameLoad, frameRefs }, ref) => {
     const internalRef = useRef<HTMLDivElement>(null);
-
-    // --- Управление ссылками на фреймы
     const { frames, setFrameRef } = useFrameRefs(frameRefs);
 
-    // --- Включение логики выделения по координатам
-    useSelectionBox(frames, selectionBox, containerRef);
-
-    // --- Поддержка внешнего ref
     useImperativeHandle(ref, () => internalRef.current as HTMLDivElement);
 
     const selection = whiteboardStore((s) => s.selection);
 
-    // --- Обрабатывает выбор фрейма пользователем
+    // --- Выбор фрейма с учётом Ctrl
     const handleFrameSelect = (id: number, e: React.MouseEvent) => {
       e.stopPropagation();
       const { toggleSelect, selectSingle } = whiteboardStore.getState();
-      if (e.ctrlKey || e.metaKey) toggleSelect(id);
-      else selectSingle(id);
+
+      if (e.ctrlKey || e.metaKey) {
+        toggleSelect(id);
+      } else {
+        selectSingle(id);
+      }
     };
 
     // --- Формирование сетки по колонкам
@@ -95,7 +85,6 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
                     onLoad={onFrameLoad}
                     onRef={(el) => setFrameRef(frameId, el)}
                     onSelect={handleFrameSelect}
-                    registerFrame={(id, el) => frames.current.set(id, el)}
                   />
                 </div>
               );

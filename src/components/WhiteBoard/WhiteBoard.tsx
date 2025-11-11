@@ -52,9 +52,28 @@ export const WhiteBoard: React.FC<WhiteBoardProps> = ({
     onPointerUp,
   } = usePan(savedPan);
 
-  const selectionBox = useSelectionBox(containerRef, frameRefs);
   useClearSelectionOnOutsideClick(contentRef, dragging, panEnabled);
   useScroll(containerRef);
+
+  // --- Отслеживание Ctrl/Command для множественного выделения
+  const isCtrlPressed = useRef(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) isCtrlPressed.current = true;
+    };
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (!e.ctrlKey && !e.metaKey) isCtrlPressed.current = false;
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  const selectionBox = useSelectionBox(frameRefs, containerRef, isCtrlPressed);
 
   // --- Инициализация ready
   useEffect(() => {

@@ -10,8 +10,9 @@ interface SelectionBox {
 }
 
 export function useSelectionBox(
+  frameRefs: React.RefObject<Map<number, HTMLDivElement>>,
   containerRef: React.RefObject<HTMLDivElement | null>,
-  frameRefs: React.RefObject<Map<number, HTMLDivElement>>
+  isCtrlPressed?: React.RefObject<boolean>
 ) {
   const [box, setBox] = useState<SelectionBox>({
     x: 0,
@@ -27,6 +28,7 @@ export function useSelectionBox(
 
   const { clearSelection, setSelection } = whiteboardStore.getState();
 
+  // --- Отслеживание Space
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "Space") isSpacePressed.current = true;
@@ -65,13 +67,13 @@ export function useSelectionBox(
             }
           }
         }
-      } catch {
-      }
+      } catch {}
     }
 
     return false;
   };
 
+  // --- Pointer Down
   const onPointerDown = useCallback(
     (e: PointerEvent) => {
       if (e.button !== 0) return;
@@ -89,8 +91,12 @@ export function useSelectionBox(
       const y = e.clientY - rect.top + container.scrollTop;
 
       start.current = { x, y };
-      lastSelected.current.clear();
-      clearSelection();
+
+      // --- Ctrl добавление
+      if (!isCtrlPressed?.current) {
+        lastSelected.current.clear();
+        clearSelection();
+      }
 
       setBox({
         x,
@@ -100,9 +106,10 @@ export function useSelectionBox(
         visible: true,
       });
     },
-    [containerRef, frameRefs]
+    [containerRef, frameRefs, isCtrlPressed]
   );
 
+  // --- Pointer Move
   const onPointerMove = useCallback(
     (e: PointerEvent) => {
       if (!start.current || !containerRef.current) return;
@@ -148,23 +155,29 @@ export function useSelectionBox(
       });
 
       const prev = lastSelected.current;
+      const combined = isCtrlPressed?.current
+        ? new Set([...prev, ...selected])
+        : selected;
+
       const changed =
-        selected.size !== prev.size ||
-        [...selected].some((id) => !prev.has(id));
+        combined.size !== prev.size ||
+        [...combined].some((id) => !prev.has(id));
 
       if (changed) {
-        lastSelected.current = selected;
-        setSelection([...selected]);
+        lastSelected.current = combined;
+        setSelection([...combined]);
       }
     },
-    [containerRef, frameRefs]
+    [containerRef, frameRefs, isCtrlPressed]
   );
 
+  // --- Pointer Up
   const onPointerUp = useCallback(() => {
     start.current = null;
     setBox((b) => ({ ...b, visible: false }));
   }, []);
 
+  // --- Подключение событий
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -179,6 +192,26 @@ export function useSelectionBox(
       window.removeEventListener("pointerup", onPointerUp);
     };
   }, [onPointerDown, onPointerMove, onPointerUp, containerRef, frameRefs]);
+
+  // --- Отслеживание Ctrl / Meta
+  useEffect(() => {
+    if (!isCtrlPressed) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) isCtrlPressed.current = true;
+    };
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (!e.ctrlKey && !e.metaKey) isCtrlPressed.current = false;
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [isCtrlPressed]);
 
   return box;
 }

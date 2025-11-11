@@ -40,16 +40,9 @@ export const Cluster: React.FC<ClusterProps> = ({
   frameRefs,
   selectionBox,
 }) => {
-  // --- ref на сам контейнер кластера
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // --- ref на область Grid внутри кластера
   const gridRef = useRef<HTMLDivElement>(null);
-
-  // --- текущее состояние панорамирования (из глобального стора whiteboard)
   const savedPan = whiteboardStore((s) => s.pan);
-
-  // --- хук, обеспечивающий перетаскивание области кластера
   const { dragging, enabled: panEnabled } = usePan(savedPan);
 
   // --- очищает текущее выделение, если пользователь кликает вне сетки
