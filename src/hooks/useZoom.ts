@@ -3,19 +3,23 @@ import { useCallback } from "react";
 interface UseZoomOptions {
   minZoom?: number;
   maxZoom?: number;
-  getZoom: () => number;
-  getPan: () => { x: number; y: number };
+  zoom: number;
+  pan: { x: number; y: number };
   setZoom: (z: number) => void;
   setPan: (p: { x: number; y: number }) => void;
+  sensitivity?: number; 
+  zoomSensitivity?: number;
 }
 
 export function useZoom({
-  minZoom = 0.25,
-  maxZoom = 3,
-  getZoom,
-  getPan,
+  minZoom = 0.05,
+  maxZoom = 8,
+  zoom,
+  pan,
   setZoom,
   setPan,
+  sensitivity = 0.5, 
+  zoomSensitivity = 0.001, 
 }: UseZoomOptions) {
   const onWheel = useCallback(
     (e: WheelEvent) => {
@@ -29,34 +33,36 @@ export function useZoom({
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      const currentZoom = getZoom();
-      const zoomSpeed = 0.0008;
-      const nextZoom = Math.min(
-        Math.max(currentZoom * Math.exp(-e.deltaY * zoomSpeed), minZoom),
-        maxZoom
-      );
-      if (nextZoom === currentZoom) return;
+      // --- Масштабирование
+      const step = Math.exp(-e.deltaY * zoomSensitivity);
+      const nextZoomRaw = zoom * step;
+      const nextZoom = Math.min(Math.max(nextZoomRaw, minZoom), maxZoom);
 
-      const prevPan = getPan();
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+      // --- Динамическая чувствительность панорамирования
+      const dynamicSensitivity = Math.max(0.1, sensitivity * nextZoom / zoom);
 
-      // --- направление от центра к курсору, нормализованное
-      const offsetX = (mouseX - centerX) / centerX;
-      const offsetY = (mouseY - centerY) / centerY;
+      // --- Панорамирование
+      const deltaX = e.deltaY * dynamicSensitivity * ((mouseX / rect.width) * 2 - 1);
+      const deltaY = e.deltaY * dynamicSensitivity * ((mouseY / rect.height) * 2 - 1);
 
-      // --- величина смещения зависит от изменения масштаба
-      const zoomDelta = nextZoom - currentZoom;
-      const panStrength = 400;
       const nextPan = {
-        x: prevPan.x - offsetX * zoomDelta * panStrength,
-        y: prevPan.y - offsetY * zoomDelta * panStrength,
+        x: pan.x + deltaX,
+        y: pan.y + deltaY,
       };
 
-      setPan(nextPan);
+      // --- Привязка к курсору
+      const contentX = (mouseX - nextPan.x) / zoom;
+      const contentY = (mouseY - nextPan.y) / zoom;
+
+      const adjustedPan = {
+        x: mouseX - contentX * nextZoom,
+        y: mouseY - contentY * nextZoom,
+      };
+
       setZoom(nextZoom);
+      setPan(adjustedPan);
     },
-    [minZoom, maxZoom, getZoom, getPan, setZoom, setPan]
+    [minZoom, maxZoom, zoom, pan, setZoom, setPan, sensitivity, zoomSensitivity]
   );
 
   return { onWheel };

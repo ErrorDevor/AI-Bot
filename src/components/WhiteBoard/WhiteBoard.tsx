@@ -55,10 +55,9 @@ export const WhiteBoard: React.FC<WhiteBoardProps> = ({
 
   const { onWheel } = useZoom({
     minZoom: 0.05,
-    maxZoom: 6,
-
-    getZoom: () => zoomFromStore,
-    getPan: () => pan,
+    maxZoom: 8,
+    zoom: zoomFromStore,
+    pan: pan,
     setZoom: setZoomInStore,
     setPan: (p) => setPanLocal(p),
   });
