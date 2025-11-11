@@ -8,6 +8,10 @@
   height: fit-content;
   min-height: 120rem;
   border-top: 0.1rem solid rgba(17, 49, 93, 0.4);
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .cluster_title {
@@ -20,4 +24,8 @@
 
 .cluster_content {
   flex: 1;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }

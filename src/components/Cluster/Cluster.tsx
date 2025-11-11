@@ -6,7 +6,10 @@ import clsx from "clsx";
 import { motion } from "motion/react";
 import { Grid } from "../Grid/Grid";
 import { usePan } from "@/hooks";
-import { useClearSelectionOnOutsideClick } from "@/hooks/whiteboard";
+import {
+  useClearSelectionOnOutsideClick,
+  useWhiteboardCursor,
+} from "@/hooks/whiteboard";
 import { whiteboardStore } from "@/utils/state/state";
 
 import css from "./Cluster.module.scss";
@@ -47,6 +50,9 @@ export const Cluster: React.FC<ClusterProps> = ({
 
   // --- очищает текущее выделение, если пользователь кликает вне сетки
   useClearSelectionOnOutsideClick(gridRef, dragging, panEnabled);
+
+  // --- Подключаем хук для управления курсором
+  useWhiteboardCursor(containerRef, dragging, panEnabled);
 
   return (
     <motion.div

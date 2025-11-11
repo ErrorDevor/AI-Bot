@@ -1,16 +1,11 @@
 "use client";
 
-import React, {
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useState,
-} from "react";
+import React, { useRef, forwardRef, useImperativeHandle } from "react";
 import clsx from "clsx";
 import { Frame } from "@/shared/ui/components/Frame/Frame";
 import { whiteboardStore } from "@/utils/state/state";
-
+import { useWhiteboardCursor } from "@/hooks/whiteboard";
+import { usePan } from "@/hooks";
 import { useFrameRefs } from "./lib/useFrameRefs";
 import { COLUMNS, columnOffsets } from "./lib/gridConfig";
 
@@ -37,7 +32,10 @@ interface GridProps {
 export const Grid = forwardRef<HTMLDivElement, GridProps>(
   ({ clusterId, images = [], className, onFrameLoad, frameRefs }, ref) => {
     const internalRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const { frames, setFrameRef } = useFrameRefs(frameRefs);
+    const savedPan = whiteboardStore((s) => s.pan);
+    const { dragging, enabled: panEnabled } = usePan(savedPan);
 
     useImperativeHandle(ref, () => internalRef.current as HTMLDivElement);
 
@@ -63,6 +61,9 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
     images.forEach((src, i) => {
       columns[i % COLUMNS].push({ src, index: i });
     });
+
+    // --- Подключаем хук для управления курсором
+    useWhiteboardCursor(internalRef, dragging, panEnabled);
 
     return (
       <div ref={internalRef} className={clsx(css.grid, className)}>

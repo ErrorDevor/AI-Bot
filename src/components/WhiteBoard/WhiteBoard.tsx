@@ -3,14 +3,11 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import clsx from "clsx";
-import { useScroll, useSelectionBox, usePan } from "@/hooks";
+import { useScroll, useSelectionBox, usePan, useZoom } from "@/hooks";
 import { useClearSelectionOnOutsideClick } from "@/hooks/whiteboard";
 import { whiteboardStore } from "@/utils/state/state";
-import {
-  createClusters,
-  useWhiteboardCursor,
-  useWhiteboardTransform,
-} from "./lib";
+import { createClusters, useWhiteboardTransform } from "./lib";
+import { useWhiteboardCursor } from "@/hooks/whiteboard";
 import { OFFSET_Y, INITIAL_SCALE } from "./lib/constants";
 
 import css from "./WhiteBoard.module.scss";
@@ -40,17 +37,31 @@ export const WhiteBoard: React.FC<WhiteBoardProps> = ({
     Map<number, React.RefObject<Map<number, HTMLDivElement>>>
   >(new Map());
 
+  const zoomFromStore = whiteboardStore((s) => s.zoom);
+  const setZoomInStore = whiteboardStore((s) => s.setZoom);
+
   const savedPan = whiteboardStore((s) => s.pan);
   const setPan = whiteboardStore((s) => s.setPan);
 
   const {
     pan,
+    setPan: setPanLocal,
     dragging,
     enabled: panEnabled,
     onPointerDown,
     onPointerMove,
     onPointerUp,
   } = usePan(savedPan);
+
+  const { onWheel } = useZoom({
+    minZoom: 0.05,
+    maxZoom: 6,
+
+    getZoom: () => zoomFromStore,
+    getPan: () => pan,
+    setZoom: setZoomInStore,
+    setPan: (p) => setPanLocal(p),
+  });
 
   useClearSelectionOnOutsideClick(contentRef, dragging, panEnabled);
   useScroll(containerRef);
@@ -86,11 +97,19 @@ export const WhiteBoard: React.FC<WhiteBoardProps> = ({
     setPan(pan);
   }, [pan.x, pan.y, setPan]);
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [onWheel]);
+
   // --- Подключаем хук для управления курсором
   useWhiteboardCursor(containerRef, dragging, panEnabled);
 
   // --- Вычисляем transform с константами
-  const transform = useWhiteboardTransform(pan, INITIAL_SCALE, OFFSET_Y);
+  const zoom = zoomFromStore;
+  const transform = useWhiteboardTransform(pan, INITIAL_SCALE * zoom, OFFSET_Y);
 
   // --- Генерация кластеров через createClusters
   const clusters = createClusters({
