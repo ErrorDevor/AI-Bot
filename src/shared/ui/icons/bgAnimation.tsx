@@ -1,3 +1,5 @@
+"use client";
+
 import React, { SVGProps, useEffect, useRef } from "react";
 import gsap from "gsap";
 
@@ -17,7 +19,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
     gsap.to(paths, {
       scaleY: 1,
       opacity: 1,
-      duration: 0.6,
+      duration: 6,
       delay: 1,
       ease: "power3.out",
       stagger: 0.15,
@@ -49,10 +51,10 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M220.042 32.2012C223.006 32.2012 225.409 29.7984 225.409 26.8344V5.36687C225.409 2.40283 223.006 0 220.042 0H198.574C195.61 0 193.207 2.40283 193.207 5.36687V26.8344C193.207 29.7984 195.61 32.2012 198.574 32.2012H220.042Z"
           fill="#97C3FF"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <g
-          clip-path="url(#paint0_diamond_4022_71387_clip_path)"
+          clipPath="url(#paint0_diamond_4022_71387_clip_path)"
           data-figma-skip-parse="true"
         >
           <g transform="matrix(-0.0198993 0 0 0.0198993 209.308 16.1006)">
@@ -63,7 +65,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               height="876.528"
               fill="url(#paint0_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -73,7 +75,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(1 -1)"
               fill="url(#paint0_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -83,7 +85,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1 1)"
               fill="url(#paint0_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -93,7 +95,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1)"
               fill="url(#paint0_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+             shapeRendering="crispEdges"
             />
           </g>
         </g>
@@ -104,7 +106,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M220.042 32.2012C223.006 32.2012 225.409 29.7984 225.409 26.8344V5.36687C225.409 2.40283 223.006 0 220.042 0H198.574C195.61 0 193.207 2.40283 193.207 5.36687V26.8344C193.207 29.7984 195.61 32.2012 198.574 32.2012H220.042Z"
           fill="url(#paint1_linear_4022_71387)"
-          fill-opacity="0.4"
+          fillOpacity="0.4"
         />
       </g>
       <foreignObject x="134.172" y="-26.8343" width="85.8699" height="85.8699">
@@ -124,10 +126,10 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M187.841 32.2012C190.805 32.2012 193.208 29.7984 193.208 26.8344V5.36687C193.208 2.40283 190.805 0 187.841 0H166.373C163.409 0 161.006 2.40283 161.006 5.36687V26.8344C161.006 29.7984 163.409 32.2012 166.373 32.2012H187.841Z"
           fill="#97C3FF"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <g
-          clip-path="url(#paint2_diamond_4022_71387_clip_path)"
+          clipPath="url(#paint2_diamond_4022_71387_clip_path)"
           data-figma-skip-parse="true"
         >
           <g transform="matrix(-0.0198993 0 0 0.0198993 177.107 16.1006)">
@@ -138,7 +140,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               height="876.528"
               fill="url(#paint2_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -148,7 +150,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(1 -1)"
               fill="url(#paint2_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -158,7 +160,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1 1)"
               fill="url(#paint2_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -168,7 +170,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1)"
               fill="url(#paint2_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
           </g>
         </g>
@@ -179,7 +181,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M187.841 32.2012C190.805 32.2012 193.208 29.7984 193.208 26.8344V5.36687C193.208 2.40283 190.805 0 187.841 0H166.373C163.409 0 161.006 2.40283 161.006 5.36687V26.8344C161.006 29.7984 163.409 32.2012 166.373 32.2012H187.841Z"
           fill="url(#paint3_linear_4022_71387)"
-          fill-opacity="0.4"
+          fillOpacity="0.4"
         />
       </g>
       <foreignObject x="101.971" y="-26.8343" width="85.8699" height="85.8699">
@@ -196,14 +198,14 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         filter="url(#filter2_i_4022_71387)"
         data-figma-bg-blur-radius="26.8344"
       >
-        <g clip-path="url(#clip2_4022_71387)">
+        <g clipPath="url(#clip2_4022_71387)">
           <path
             d="M155.639 32.2012C158.604 32.2012 161.006 29.7984 161.006 26.8344V5.36687C161.006 2.40283 158.604 0 155.639 0H134.172C131.208 0 128.805 2.40283 128.805 5.36687V26.8344C128.805 29.7984 131.208 32.2012 134.172 32.2012H155.639Z"
             fill="#97C3FF"
-            fill-opacity="0.2"
+            fillOpacity="0.2"
           />
           <g
-            clip-path="url(#paint4_diamond_4022_71387_clip_path)"
+            clipPath="url(#paint4_diamond_4022_71387_clip_path)"
             data-figma-skip-parse="true"
           >
             <g transform="matrix(-0.0198993 0 0 0.0198993 144.906 16.1006)">
@@ -214,7 +216,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
                 height="876.528"
                 fill="url(#paint4_diamond_4022_71387)"
                 opacity="0.5"
-                shape-rendering="crispEdges"
+                shapeRendering="crispEdges"
               />
               <rect
                 x="0"
@@ -224,7 +226,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
                 transform="scale(1 -1)"
                 fill="url(#paint4_diamond_4022_71387)"
                 opacity="0.5"
-                shape-rendering="crispEdges"
+                shapeRendering="crispEdges"
               />
               <rect
                 x="0"
@@ -234,7 +236,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
                 transform="scale(-1 1)"
                 fill="url(#paint4_diamond_4022_71387)"
                 opacity="0.5"
-                shape-rendering="crispEdges"
+                shapeRendering="crispEdges"
               />
               <rect
                 x="0"
@@ -244,7 +246,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
                 transform="scale(-1)"
                 fill="url(#paint4_diamond_4022_71387)"
                 opacity="0.5"
-                shape-rendering="crispEdges"
+                shapeRendering="crispEdges"
               />
             </g>
           </g>
@@ -255,7 +257,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           <path
             d="M155.639 32.2012C158.604 32.2012 161.006 29.7984 161.006 26.8344V5.36687C161.006 2.40283 158.604 0 155.639 0H134.172C131.208 0 128.805 2.40283 128.805 5.36687V26.8344C128.805 29.7984 131.208 32.2012 134.172 32.2012H155.639Z"
             fill="url(#paint5_linear_4022_71387)"
-            fill-opacity="0.4"
+            fillOpacity="0.4"
           />
           <g
             style={{ mixBlendMode: "plus-lighter" }}
@@ -289,10 +291,10 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M123.438 32.2012C126.402 32.2012 128.805 29.7984 128.805 26.8344V5.36687C128.805 2.40283 126.402 0 123.438 0H101.971C99.0068 0 96.6039 2.40283 96.6039 5.36687V26.8344C96.6039 29.7984 99.0068 32.2012 101.971 32.2012H123.438Z"
           fill="#97C3FF"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <g
-          clip-path="url(#paint6_diamond_4022_71387_clip_path)"
+          clipPath="url(#paint6_diamond_4022_71387_clip_path)"
           data-figma-skip-parse="true"
         >
           <g transform="matrix(-0.0198993 0 0 0.0198993 112.705 16.1006)">
@@ -303,7 +305,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               height="876.528"
               fill="url(#paint6_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -313,7 +315,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(1 -1)"
               fill="url(#paint6_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -323,7 +325,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1 1)"
               fill="url(#paint6_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -333,7 +335,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1)"
               fill="url(#paint6_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
           </g>
         </g>
@@ -344,7 +346,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M123.438 32.2012C126.402 32.2012 128.805 29.7984 128.805 26.8344V5.36687C128.805 2.40283 126.402 0 123.438 0H101.971C99.0068 0 96.6039 2.40283 96.6039 5.36687V26.8344C96.6039 29.7984 99.0068 32.2012 101.971 32.2012H123.438Z"
           fill="url(#paint7_linear_4022_71387)"
-          fill-opacity="0.4"
+          fillOpacity="0.4"
         />
       </g>
       <foreignObject x="37.5685" y="-26.8343" width="85.8699" height="85.8699">
@@ -364,10 +366,10 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M91.2371 32.2012C94.2012 32.2012 96.604 29.7984 96.604 26.8344V5.36687C96.604 2.40283 94.2012 0 91.2371 0H69.7696C66.8056 0 64.4028 2.40283 64.4028 5.36687V26.8344C64.4028 29.7984 66.8056 32.2012 69.7696 32.2012H91.2371Z"
           fill="#97C3FF"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <g
-          clip-path="url(#paint8_diamond_4022_71387_clip_path)"
+          clipPath="url(#paint8_diamond_4022_71387_clip_path)"
           data-figma-skip-parse="true"
         >
           <g transform="matrix(-0.0198993 0 0 0.0198993 80.5034 16.1006)">
@@ -378,7 +380,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               height="876.528"
               fill="url(#paint8_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -388,7 +390,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(1 -1)"
               fill="url(#paint8_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -398,7 +400,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1 1)"
               fill="url(#paint8_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -408,7 +410,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1)"
               fill="url(#paint8_diamond_4022_71387)"
               opacity="0.5"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
           </g>
         </g>
@@ -419,7 +421,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M91.2371 32.2012C94.2012 32.2012 96.604 29.7984 96.604 26.8344V5.36687C96.604 2.40283 94.2012 0 91.2371 0H69.7696C66.8056 0 64.4028 2.40283 64.4028 5.36687V26.8344C64.4028 29.7984 66.8056 32.2012 69.7696 32.2012H91.2371Z"
           fill="url(#paint9_linear_4022_71387)"
-          fill-opacity="0.4"
+          fillOpacity="0.4"
         />
       </g>
       <foreignObject x="5.36681" y="-26.8343" width="85.8699" height="85.8699">
@@ -439,10 +441,10 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
         <path
           d="M59.0355 32.2012C61.9995 32.2012 64.4023 29.7984 64.4023 26.8344V5.36687C64.4023 2.40283 61.9995 0 59.0355 0H37.568C34.6039 0 32.2011 2.40283 32.2011 5.36687V26.8344C32.2011 29.7984 34.6039 32.2012 37.568 32.2012H59.0355Z"
           fill="#E3EFFF"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <g
-          clip-path="url(#paint10_diamond_4022_71387_clip_path)"
+          clipPath="url(#paint10_diamond_4022_71387_clip_path)"
           data-figma-skip-parse="true"
         >
           <g transform="matrix(-0.0198993 0 0 0.0198993 48.3017 16.1006)">
@@ -453,7 +455,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               height="876.528"
               fill="url(#paint10_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -463,7 +465,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(1 -1)"
               fill="url(#paint10_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -473,7 +475,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1 1)"
               fill="url(#paint10_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -483,7 +485,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1)"
               fill="url(#paint10_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
           </g>
         </g>
@@ -512,10 +514,10 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           rx="5.36687"
           transform="matrix(0 -1 -1 0 32.2012 32.2012)"
           fill="#E3EFFF"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <g
-          clip-path="url(#paint11_diamond_4022_71387_clip_path)"
+          clipPath="url(#paint11_diamond_4022_71387_clip_path)"
           data-figma-skip-parse="true"
         >
           <g transform="matrix(-0.0198993 0 0 0.0198993 16.1006 16.1006)">
@@ -526,7 +528,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               height="876.528"
               fill="url(#paint11_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -536,7 +538,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(1 -1)"
               fill="url(#paint11_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -546,7 +548,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1 1)"
               fill="url(#paint11_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
             <rect
               x="0"
@@ -556,7 +558,7 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
               transform="scale(-1)"
               fill="url(#paint11_diamond_4022_71387)"
               opacity="0.4"
-              shape-rendering="crispEdges"
+              shapeRendering="crispEdges"
             />
           </g>
         </g>
@@ -576,9 +578,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -620,9 +622,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -664,9 +666,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -708,9 +710,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="99"
           height="77"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -729,9 +731,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -773,9 +775,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -817,9 +819,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -879,9 +881,9 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           width="85.8699"
           height="85.8699"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -952,8 +954,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_4022_71387"
@@ -963,8 +965,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="19.4834"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#97C3FF" stop-opacity="0" />
-          <stop offset="1" stop-color="#97C3FF" />
+          <stop stopColor="#97C3FF" stopOpacity="0" />
+          <stop offset="1" stopColor="#97C3FF" />
         </linearGradient>
         <linearGradient
           id="paint2_diamond_4022_71387"
@@ -974,8 +976,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_4022_71387"
@@ -985,8 +987,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="19.4834"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#97C3FF" stop-opacity="0" />
-          <stop offset="1" stop-color="#97C3FF" />
+          <stop stopColor="#97C3FF" stopOpacity="0" />
+          <stop offset="1" stopColor="#97C3FF" />
         </linearGradient>
         <linearGradient
           id="paint4_diamond_4022_71387"
@@ -996,8 +998,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_4022_71387"
@@ -1007,8 +1009,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="19.4834"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#97C3FF" stop-opacity="0" />
-          <stop offset="1" stop-color="#97C3FF" />
+          <stop stopColor="#97C3FF" stopOpacity="0" />
+          <stop offset="1" stopColor="#97C3FF" />
         </linearGradient>
         <linearGradient
           id="paint6_diamond_4022_71387"
@@ -1018,8 +1020,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_4022_71387"
@@ -1029,8 +1031,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="19.4834"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#97C3FF" stop-opacity="0" />
-          <stop offset="1" stop-color="#97C3FF" />
+          <stop stopColor="#97C3FF" stopOpacity="0" />
+          <stop offset="1" stopColor="#97C3FF" />
         </linearGradient>
         <linearGradient
           id="paint8_diamond_4022_71387"
@@ -1040,8 +1042,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_4022_71387"
@@ -1051,8 +1053,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="12.558"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#97C3FF" stop-opacity="0" />
-          <stop offset="1" stop-color="#97C3FF" />
+          <stop stopColor="#97C3FF" stopOpacity="0" />
+          <stop offset="1" stopColor="#97C3FF" />
         </linearGradient>
         <linearGradient
           id="paint10_diamond_4022_71387"
@@ -1062,8 +1064,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint11_diamond_4022_71387"
@@ -1073,8 +1075,8 @@ const BackgroundAnimation: React.FC<SVGProps<SVGSVGElement>> = (props) => {
           y2="500"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <clipPath id="clip2_4022_71387">
           <path

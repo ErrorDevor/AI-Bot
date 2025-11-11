@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import clsx from "clsx";
+import { whiteboardStore } from "@/utils/state/state";
+import { useImageLoader } from "./lib/useImageLoader";
 
 import css from "./Frame.module.scss";
+
+// --- Frame — контейнер, который хранит реф-изображение,
 
 interface FrameProps {
   id: number;
@@ -16,6 +20,7 @@ interface FrameProps {
   onRef?: (el: HTMLDivElement | null) => void;
   minDelayMs?: number;
   maxWaitMs?: number;
+  registerFrame: (id: number, el: HTMLDivElement) => void;
 }
 
 export const Frame: React.FC<FrameProps> = ({
@@ -28,84 +33,27 @@ export const Frame: React.FC<FrameProps> = ({
   onRef,
   minDelayMs = 2000,
   maxWaitMs = 2000,
+  registerFrame
 }) => {
   const elRef = useRef<HTMLDivElement | null>(null);
-  const [loaded, setLoaded] = useState(false);
-  const [showImage, setShowImage] = useState(false);
-  const minTimerRef = useRef<number | null>(null);
-  const maxTimerRef = useRef<number | null>(null);
 
+  // --- Подписка на выбранные элементы whiteboard
+  const selectedIds = whiteboardStore((state) => state.selection.selectedIds);
+  const isSelected = selectedIds.has(id);
+
+  // --- Custom хук загрузки изображения
+  const { showImage, handleNativeLoad, handleNativeError } = useImageLoader(
+    src,
+    minDelayMs,
+    maxWaitMs,
+    onLoad
+  );
+
+  // --- Передаём ref наружу
   useEffect(() => {
     onRef?.(elRef.current ?? null);
     return () => onRef?.(null);
   }, [onRef]);
-
-  useEffect(() => {
-    if (!loaded) return;
-
-    if (minTimerRef.current) {
-      window.clearTimeout(minTimerRef.current);
-      minTimerRef.current = null;
-    }
-
-    minTimerRef.current = window.setTimeout(() => {
-      setShowImage(true);
-      onLoad?.();
-      if (minTimerRef.current) {
-        window.clearTimeout(minTimerRef.current);
-        minTimerRef.current = null;
-      }
-      if (maxTimerRef.current) {
-        window.clearTimeout(maxTimerRef.current);
-        maxTimerRef.current = null;
-      }
-    }, minDelayMs);
-
-    return () => {
-      if (minTimerRef.current) {
-        window.clearTimeout(minTimerRef.current);
-        minTimerRef.current = null;
-      }
-    };
-  }, [loaded]);
-
-  useEffect(() => {
-    maxTimerRef.current = window.setTimeout(() => {
-      setShowImage(true);
-      if (minTimerRef.current) {
-        window.clearTimeout(minTimerRef.current);
-        minTimerRef.current = null;
-      }
-      maxTimerRef.current = null;
-    }, maxWaitMs);
-
-    return () => {
-      if (maxTimerRef.current) {
-        window.clearTimeout(maxTimerRef.current);
-        maxTimerRef.current = null;
-      }
-      if (minTimerRef.current) {
-        window.clearTimeout(minTimerRef.current);
-        minTimerRef.current = null;
-      }
-    };
-  }, [src]);
-
-  const handleNativeLoad = () => {
-    setLoaded(true);
-  };
-
-  const handleNativeError = () => {
-    setShowImage(true);
-    if (minTimerRef.current) {
-      window.clearTimeout(minTimerRef.current);
-      minTimerRef.current = null;
-    }
-    if (maxTimerRef.current) {
-      window.clearTimeout(maxTimerRef.current);
-      maxTimerRef.current = null;
-    }
-  };
 
   return (
     <div
@@ -149,4 +97,3 @@ export const Frame: React.FC<FrameProps> = ({
     </div>
   );
 };
-

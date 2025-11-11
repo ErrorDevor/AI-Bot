@@ -60,14 +60,9 @@
   padding: 0.6rem 0.8rem;
   width: 3.2rem;
   height: 3.2rem;
-  overflow: hidden;
   background-color: #ffffff;
   border-radius: 0.6rem;
   cursor: pointer;
-
-  &:hover .arrow_icon {
-    animation: shake 0.5s ease-in-out both;
-  }
 }
 
 .dropdown_wrapper::before {
@@ -89,17 +84,214 @@
   pointer-events: none;
 }
 
-@keyframes shake {
+.arrow_icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-block;
+
+  --rot: 0deg;
+  --ty: 0;
+  transform: rotate(var(--rot)) translateY(var(--ty));
+  transition: transform 0.5s ease;
+}
+
+.dropdown_wrapper.open:hover .arrow_icon {
+  animation: none;
+}
+
+.dropdown_wrapper.open .arrow_icon {
+  --rot: 180deg;
+}
+
+.dropdown_wrapper:not(.open):hover .arrow_icon {
+  animation: shakeVar 0.5s ease-in-out both;
+}
+
+/**/
+.dropdown_menu {
+  position: absolute;
+  top: 3.8rem;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem;
+  background: rgba(16, 26, 41, 0.7);
+  border-radius: 1.6rem;
+  border: 0.1rem solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10rem);
+  min-width: 19rem;
+  height: fit-content;
+  opacity: 0;
+  transform: translateY(-0.4rem) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+  z-index: 1000;
+}
+
+.dropdown_menu.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.dropdown_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 3.4rem;
+  gap: 0.6rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  white-space: nowrap;
+  font-size: 1.2rem;
+  font-weight: 350;
+  letter-spacing: -0.01em;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.item_icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+/**/
+@keyframes shakeVar {
   0% {
-    transform: translateY(0);
+    --ty: 0;
   }
   40% {
-    transform: translateY(0.1rem);
+    --ty: 0.1rem;
   }
   60% {
-    transform: translateY(-0.1rem);
+    --ty: -0.1rem;
   }
   100% {
-    transform: translateY(0);
+    --ty: 0;
   }
+}
+
+/**/
+.submenu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  width: 26.1rem;
+  background: rgba(16, 26, 41, 0.7);
+  border-radius: 1.6rem;
+  border: 0.1rem solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  backdrop-filter: blur(10rem);
+  opacity: 0;
+  transform: translateX(-2rem) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+  z-index: 1001;
+}
+
+.submenu.open {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.submenu_header {
+  padding: 2rem 2rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 0.1rem solid rgba(255, 255, 255, 0.08);
+}
+
+.submenu_list {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.2rem;
+  max-height: 24rem;
+  overflow-y: auto;
+}
+
+.submenu_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 350;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.submenu_item_left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.folder_icon {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.folder_count {
+  line-height: 1.6rem;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.submenu_footer {
+  display: flex;
+  justify-content: center;
+  border-top: 0.1rem solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10rem);
+  padding: 0.8rem;
+  background-image: url("/images/add-folder-background.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.new_folder_btn {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  border-radius: 10rem;
+  padding: 0.8rem 1.2rem;
+  backdrop-filter: blur(6rem);
+  transition: background-color 0.2s ease;
+  z-index: 10;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.plus_icon {
+  width: 1.4rem;
+  height: 1.4rem;
 }

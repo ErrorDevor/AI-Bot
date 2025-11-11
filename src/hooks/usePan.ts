@@ -1,13 +1,13 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 
-export function usePan() {
-  const pRef = useRef({
-    dragging: false,
-    startX: 0,
-    startY: 0,
-  });
+export function usePan(initialPan: { x: number; y: number }) {
+  const pRef = useRef({ dragging: false, startX: 0, startY: 0 });
 
-  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [pan, setPan] = useState<{ x: number; y: number }>(() => ({
+    x: initialPan.x,
+    y: initialPan.y,
+  }));
+
   const [enabled, setEnabled] = useState(false);
   const [dragging, setDragging] = useState(false);
 
@@ -32,17 +32,21 @@ export function usePan() {
     [enabled]
   );
 
-  const onPointerMove = useCallback((e: React.PointerEvent) => {
-    if (!pRef.current.dragging) return;
+  const onPointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!enabled) return;
+      if (!pRef.current.dragging) return;
 
-    const dx = e.clientX - pRef.current.startX;
-    const dy = e.clientY - pRef.current.startY;
+      const dx = e.clientX - pRef.current.startX;
+      const dy = e.clientY - pRef.current.startY;
 
-    pRef.current.startX = e.clientX;
-    pRef.current.startY = e.clientY;
+      pRef.current.startX = e.clientX;
+      pRef.current.startY = e.clientY;
 
-    setPan((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
-  }, []);
+      setPan((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
+    },
+    [enabled]
+  );
 
   const onPointerUp = useCallback((e: React.PointerEvent) => {
     pRef.current.dragging = false;
@@ -52,6 +56,27 @@ export function usePan() {
       (e.target as Element).releasePointerCapture?.(e.pointerId);
     } catch {}
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        enablePan();
+      }
+    };
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        disablePan();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [enablePan, disablePan]);
 
   return {
     pan,

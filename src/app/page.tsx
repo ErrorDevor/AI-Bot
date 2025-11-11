@@ -49,6 +49,13 @@ const mockData = [
   "/images/Gallery/img9.png",
 ];
 
+const userFoldersArray = [
+  { id: 1, name: "Bank App" },
+  { id: 2, name: "Dashboard  AI" },
+  { id: 3, name: "E-commerce" },
+  { id: 4, name: "Hero Section" },
+];
+
 export default function Home() {
   return (
     <main>
@@ -94,7 +101,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <WhiteBoard className={css.whiteboard_div} images={mockData} />
+        <WhiteBoard className={css.whiteboard_div} images={mockData} folders={userFoldersArray}/>
 
         <div className={css.folders_div}>
           <motion.div
@@ -110,7 +117,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <div className={css.info_div}>
+        {/* <div className={css.info_div}>
           <motion.div
             initial={{ x: 50, opacity: 0, filter: "blur(10px)" }}
             animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
@@ -138,7 +145,7 @@ export default function Home() {
               </p>
             </div>
           </motion.div>
-        </div>
+        </div> */}
       </Wrapper>
     </main>
   );

@@ -1,38 +1,48 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import clsx from "clsx";
-import { Grid } from "@/components/Grid/Grid";
-import { useZoom, usePan, useScroll, useSelectionBox } from "@/hooks";
+import { useScroll, useSelectionBox, usePan } from "@/hooks";
+import { useClearSelectionOnOutsideClick } from "@/hooks/whiteboard";
+import { whiteboardStore } from "@/utils/state/state";
 import {
-  useWheelZoom,
-  usePanControls,
-  useCenterContent,
-  useImagesLoaded,
-  useClearSelectionOnOutsideClick,
-} from "@/hooks/whiteboard";
+  createClusters,
+  useWhiteboardCursor,
+  useWhiteboardTransform,
+} from "./lib";
+import { OFFSET_Y, INITIAL_SCALE } from "./lib/constants";
 
 import css from "./WhiteBoard.module.scss";
+
+interface FolderType {
+  id: number;
+  name: string;
+}
 
 interface WhiteBoardProps {
   className?: string;
   images?: string[];
+  folders?: FolderType[];
 }
-
-const INITIAL_SCALE = 0.65;
-const OFFSET_Y = -200;
 
 export const WhiteBoard: React.FC<WhiteBoardProps> = ({
   className,
   images = [],
+  folders = [],
 }) => {
+  const [ready, setReady] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const frameRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+  const clusterFrameRefs = useRef<
+    Map<number, React.RefObject<Map<number, HTMLDivElement>>>
+  >(new Map());
 
-  const { zoom, onWheel } = useZoom();
+  const savedPan = whiteboardStore((s) => s.pan);
+  const setPan = whiteboardStore((s) => s.setPan);
+
   const {
     pan,
     dragging,
@@ -40,33 +50,37 @@ export const WhiteBoard: React.FC<WhiteBoardProps> = ({
     onPointerDown,
     onPointerMove,
     onPointerUp,
-    enablePan,
-    disablePan,
-  } = usePan();
+  } = usePan(savedPan);
 
-  const { imagesLoaded, handleImageLoad } = useImagesLoaded(images);
   const selectionBox = useSelectionBox(containerRef, frameRefs);
-
-  useWheelZoom(containerRef, onWheel);
-  useCenterContent(containerRef, contentRef, imagesLoaded, usePan);
-  usePanControls(enablePan, disablePan);
-  useClearSelectionOnOutsideClick(gridRef, dragging, panEnabled);
+  useClearSelectionOnOutsideClick(contentRef, dragging, panEnabled);
   useScroll(containerRef);
 
-  const transform = `translate(${pan.x}px, ${pan.y + OFFSET_Y}px) scale(${
-    zoom * INITIAL_SCALE
-  })`;
-
+  // --- Инициализация ready
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const timer = setTimeout(() => setReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
-    container.style.cursor = panEnabled
-      ? dragging
-        ? "grabbing"
-        : "grab"
-      : "default";
-  }, [dragging, panEnabled]);
+  // --- Синхронизация панорамирования с глобальным состоянием
+  useEffect(() => {
+    setPan(pan);
+  }, [pan.x, pan.y, setPan]);
+
+  // --- Подключаем хук для управления курсором
+  useWhiteboardCursor(containerRef, dragging, panEnabled);
+
+  // --- Вычисляем transform с константами
+  const transform = useWhiteboardTransform(pan, INITIAL_SCALE, OFFSET_Y);
+
+  // --- Генерация кластеров через createClusters
+  const clusters = createClusters({
+    folders,
+    images,
+    frameRefs,
+    selectionBox,
+    clusterFrameRefs,
+  });
 
   return (
     <div
@@ -91,26 +105,21 @@ export const WhiteBoard: React.FC<WhiteBoardProps> = ({
             borderRadius: "0.8rem",
             border: "0.1rem dashed rgba(0, 120, 215, 0.9)",
             backgroundColor: "rgba(0, 120, 215, 0.3)",
-            zIndex: 100,
+            zIndex: 9999,
             pointerEvents: "none",
           }}
         />
       )}
-      <div
-        ref={contentRef}
-        className={css.white_board_content}
-        style={{ transform }}
-      >
-        <div className={css.canvas_area}>
-          <Grid
-            images={images}
-            onFrameLoad={handleImageLoad}
-            ref={gridRef}
-            selectionBox={selectionBox}
-            frameRefs={frameRefs}
-          />
+
+      {ready && (
+        <div
+          ref={contentRef}
+          className={css.white_board_content}
+          style={{ transform }}
+        >
+          <div className={css.canvas_area}>{clusters}</div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

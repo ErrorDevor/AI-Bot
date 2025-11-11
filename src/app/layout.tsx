@@ -5,7 +5,7 @@ import localFont from "next/font/local";
 import "../shared/styles/index.scss";
 
 const lausanne = localFont({
-  src: [{ path: "../shared/assets/fonts/Lausanne.woff2", style: "normal" }],
+  src: [{ path: "../shared/assets/fonts/TWKLausannePan-350.otf", style: "normal" }],
   variable: "--font-lausanne-pan",
   display: "swap",
 });
