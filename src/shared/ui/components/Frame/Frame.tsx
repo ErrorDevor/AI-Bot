@@ -59,6 +59,8 @@ export const Frame: React.FC<FrameProps> = ({
             const img = e.currentTarget as HTMLImageElement;
             onLoaded(img.naturalWidth, img.naturalHeight);
           }
+          const imgEl = e.currentTarget;
+          if (onLoaded) onLoaded(imgEl.naturalWidth, imgEl.naturalHeight);
         }}
         onError={handleNativeError}
         style={{

@@ -1,8 +1,8 @@
 .frame {
   display: block;
   position: relative;
-  width: 100%;
-  aspect-ratio: 1/1;
+  width: fit-content;
+  height: fit-content;
   border-radius: 0.6rem;
   overflow: hidden;
   background-color: #ffffff;
@@ -10,14 +10,14 @@
 }
 
 .image {
+  position: relative;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   z-index: 0;
-  position: relative;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease-in-out;
 
   &:hover {
     transform: scale(1.01);

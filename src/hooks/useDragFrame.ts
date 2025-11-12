@@ -9,12 +9,34 @@ export const useDragFrame = ({ id, scale }: { id: string; scale: number }) => {
     whiteboardStore.getState().getFramePosition(id) ?? { x: 0, y: 0 }
   );
 
+  const spacePressed = useRef(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space") spacePressed.current = true;
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === "Space") spacePressed.current = false;
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
   useEffect(() => {
     const elem = document.getElementById(id) as SVGGraphicsElement | null;
     if (!elem) return;
     elemRef.current = elem;
 
     const onPointerDown = (e: PointerEvent) => {
+      if (spacePressed.current || e.button === 1) return;
+
       e.stopPropagation();
       e.preventDefault();
       isDragging.current = true;

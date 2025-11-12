@@ -1,6 +1,8 @@
 .frame_group {
   width: 100%;
   border-radius: 0.6rem;
+  width: fit-content;
+  height: fit-content;
   overflow: hidden;
   background-color: #ffffff;
 }
@@ -15,4 +17,5 @@
   stroke-width: 2;
   fill: rgba(35, 130, 255, 0.2);
   pointer-events: none;
+  z-index: 10;
 }

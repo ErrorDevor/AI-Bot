@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { FrameGroup } from "../FrameGroup/FrameGroup";
+import { Grid } from "../Grid/Grid";
 import {
   usePanScale,
   useCursor,
@@ -13,10 +14,21 @@ import { whiteboardStore } from "@/utils/state/state";
 
 import css from "./Whiteboard.module.scss";
 
-export const Whiteboard: React.FC = () => {
+interface FrameData {
+  id: string;
+  src: string;
+  width: number;
+  height: number;
+  color?: string;
+}
+
+interface WhiteboardProps {
+  frames?: string[];
+}
+
+export const Whiteboard: React.FC<WhiteboardProps> = ({ frames = [] }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const { setGrab, setGrabbing, setDefault } = useCursor(svgRef);
-
   const { clearSelection } = useSelect();
   const {
     selectedIds: groupSelectedIds,
@@ -27,7 +39,7 @@ export const Whiteboard: React.FC = () => {
 
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
-  const [mounted, setMounted] = useState(false); 
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setPan(whiteboardStore.getState().pan);
@@ -56,42 +68,25 @@ export const Whiteboard: React.FC = () => {
     cursor: { setGrab, setGrabbing, setDefault },
   });
 
-  const frames = [
-    {
-      id: "frame-1",
-      x: 100,
-      y: 100,
-      width: 200,
-      height: 120,
-      color: "#ff6666",
-    },
-    {
-      id: "frame-2",
-      x: 400,
-      y: 200,
-      width: 180,
-      height: 150,
-      color: "#66ccff",
-    },
-    {
-      id: "frame-3",
-      x: 700,
-      y: 100,
-      width: 220,
-      height: 140,
-      color: "#99ff99",
-    },
-  ];
+  const frameObjects: FrameData[] = frames.map((src, i) => ({
+    id: `frame-${i + 1}`,
+    src,
+    width: 200,
+    height: 200,
+  }));
 
-  const allFrameIds = frames.map((f) => f.id);
+  const allFrameIds = frameObjects.map((f) => f.id);
 
   const { selectionBox, onMouseDown, onMouseMove, onMouseUp } = useSelectionBox(
     {
       getFrameRects: () =>
-        frames.map((f) => ({
-          id: f.id,
-          rect: document.getElementById(f.id)!.getBoundingClientRect(),
-        })),
+        frameObjects.map((f) => {
+          const el = document.getElementById(f.id);
+          const rect = el
+            ? el.getBoundingClientRect()
+            : new DOMRect(0, 0, f.width, f.height);
+          return { id: f.id, rect };
+        }),
       onSelectFrames: (ids, modifiers) => {
         const { shiftKey, ctrlKey } = modifiers;
         ids.forEach((id) =>
@@ -136,19 +131,24 @@ export const Whiteboard: React.FC = () => {
           style={{ transform: canvasTransform }}
           transform={canvasTransform}
         >
-          {frames.map((f) => (
-            <FrameGroup
-              key={f.id}
-              {...f}
-              scale={scale}
-              selected={isGroupSelected(f.id)}
-              onSelect={(e?: React.MouseEvent) => {
-                const shift = e?.shiftKey ?? false;
-                const ctrl = (e?.ctrlKey || e?.metaKey) ?? false;
-                selectWithModifiers(f.id, allFrameIds, shift, ctrl);
-              }}
-            />
-          ))}
+          <Grid>
+            {frameObjects.map((f) => (
+              <FrameGroup
+                key={f.id}
+                id={f.id}
+                x={0}
+                y={0}
+                scale={scale}
+                selected={isGroupSelected(f.id)}
+                onSelect={(e) => {
+                  const shift = e?.shiftKey ?? false;
+                  const ctrl = (e?.ctrlKey || e?.metaKey) ?? false;
+                  selectWithModifiers(f.id, allFrameIds, shift, ctrl);
+                }}
+                src={f.src}
+              />
+            ))}
+          </Grid>
         </g>
       )}
 
