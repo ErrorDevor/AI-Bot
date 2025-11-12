@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export interface FrameSelection {
-  selectedIds: Set<number>;
+  selectedIds: Set<string>;
   isDragging: boolean;
   selectionRect: { x: number; y: number; width: number; height: number } | null;
   pointerButton?: number;
@@ -9,56 +9,61 @@ export interface FrameSelection {
 
 interface WhiteboardState {
   selection: FrameSelection;
-  selectSingle: (id: number) => void;
-  toggleSelect: (id: number) => void;
+  selectSingle: (id: string) => void;
+  toggleSelect: (id: string) => void;
   clearSelection: () => void;
-  setSelectionButton?: (btn: number) => void;
-  setSelection: (ids: number[]) => void;
+  setSelection: (ids: string[]) => void;
 
   pan: { x: number; y: number };
   setPan: (pan: { x: number; y: number }) => void;
 
   zoom: number;
   setZoom: (zoom: number) => void;
+
+  framePositions: Record<string, { x: number; y: number }>;
+  setFramePosition: (id: string, pos: { x: number; y: number }) => void;
+  getFramePosition: (id: string) => { x: number; y: number } | null;
 }
 
 const loadSavedPan = (): { x: number; y: number } => {
   try {
     const saved = localStorage.getItem("whiteboardPan");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      console.log("[state.ts] Loaded savedPan from localStorage:", parsed);
-      return parsed;
-    }
-  } catch (e) {
-    console.warn("[state.ts] Error loading savedPan from localStorage:", e);
+    return saved ? JSON.parse(saved) : { x: 0, y: 0 };
+  } catch {
+    return { x: 0, y: 0 };
   }
-  return { x: 0, y: 0 };
 };
 
 const loadSavedZoom = (): number => {
   try {
     const saved = localStorage.getItem("whiteboardZoom");
-    if (saved) return JSON.parse(saved);
-  } catch {}
-  return 1;
+    return saved ? JSON.parse(saved) : 1;
+  } catch {
+    return 1;
+  }
 };
 
-export const whiteboardStore = create<WhiteboardState>((set) => ({
+const loadSavedFrames = (): Record<string, { x: number; y: number }> => {
+  try {
+    const saved = localStorage.getItem("framePositions");
+    return saved ? JSON.parse(saved) : {};
+  } catch {
+    return {};
+  }
+};
+
+export const whiteboardStore = create<WhiteboardState>((set, get) => ({
   selection: { selectedIds: new Set(), isDragging: false, selectionRect: null },
 
-  // --- Выделение одиночного фрейма (сбрасывает все остальные)
   selectSingle: (id) =>
     set((state) => ({
       selection: { ...state.selection, selectedIds: new Set([id]) },
     })),
 
-  // --- Ctrl/Command выделение (добавление/удаление из множества)
   toggleSelect: (id) =>
     set((state) => {
       const selectedIds = new Set(state.selection.selectedIds);
-      if (selectedIds.has(id)) selectedIds.delete(id);
-      else selectedIds.add(id);
+      selectedIds.has(id) ? selectedIds.delete(id) : selectedIds.add(id);
       return { selection: { ...state.selection, selectedIds } };
     }),
 
@@ -67,26 +72,28 @@ export const whiteboardStore = create<WhiteboardState>((set) => ({
       selection: { ...state.selection, selectedIds: new Set() },
     })),
 
-  setSelectionButton: (btn) =>
-    set((state) => ({ selection: { ...state.selection, pointerButton: btn } })),
-
   setSelection: (ids) =>
     set((state) => ({
       selection: { ...state.selection, selectedIds: new Set(ids) },
     })),
 
-  // --- Панорамирование
   pan: loadSavedPan(),
   setPan: (pan) => {
-    console.log("[state.ts] Saving pan to Zustand and localStorage:", pan);
     localStorage.setItem("whiteboardPan", JSON.stringify(pan));
     set({ pan });
   },
 
-  // --- Масштаб
   zoom: loadSavedZoom(),
   setZoom: (zoom) => {
     localStorage.setItem("whiteboardZoom", JSON.stringify(zoom));
     set({ zoom });
   },
+
+  framePositions: loadSavedFrames(),
+  setFramePosition: (id, pos) => {
+    const updated = { ...get().framePositions, [id]: pos };
+    localStorage.setItem("framePositions", JSON.stringify(updated));
+    set({ framePositions: updated });
+  },
+  getFramePosition: (id) => get().framePositions[id] ?? null,
 }));

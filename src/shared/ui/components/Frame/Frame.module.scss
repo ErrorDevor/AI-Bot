@@ -2,17 +2,11 @@
   display: block;
   position: relative;
   width: 100%;
-  max-width: 18.3rem;
-height: fit-content;
+  aspect-ratio: 1/1;
   border-radius: 0.6rem;
   overflow: hidden;
   background-color: #ffffff;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
-
-  &:hover {
-    transform: scale(1.01);
-  }
 }
 
 .image {
@@ -23,7 +17,11 @@ height: fit-content;
   z-index: 0;
   position: relative;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.01);
+  }
 }
 
 .image.loaded {
@@ -43,7 +41,7 @@ height: fit-content;
 .loader {
   width: 2.4rem;
   height: 2.4rem;
-  border: 0.3rem solid rgba(17, 49, 93, 0.2); 
+  border: 0.3rem solid rgba(17, 49, 93, 0.2);
   border-top-color: rgba(17, 49, 93, 0.4);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
