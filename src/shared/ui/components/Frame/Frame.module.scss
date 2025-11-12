@@ -2,6 +2,8 @@
   display: block;
   position: relative;
   width: 100%;
+  max-width: 18.3rem;
+height: fit-content;
   border-radius: 0.6rem;
   overflow: hidden;
   background-color: #ffffff;
@@ -26,20 +28,6 @@
 
 .image.loaded {
   opacity: 1;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(35, 130, 255, 0.2);
-  border: 0.1rem solid rgba(35, 130, 255, 1);
-  border-radius: 0.6rem;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.frame.selected {
-  z-index: 10;
 }
 
 .loaderContainer {
