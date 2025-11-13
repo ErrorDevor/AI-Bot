@@ -13,7 +13,7 @@ interface WhiteboardState {
   toggleSelect: (id: string) => void;
   clearSelection: () => void;
   setSelection: (ids: string[]) => void;
-
+setSelectionDragging: (isDragging: boolean) => void;
   pan: { x: number; y: number };
   setPan: (pan: { x: number; y: number }) => void;
 
@@ -54,6 +54,11 @@ const loadSavedFrames = (): Record<string, { x: number; y: number }> => {
 
 export const whiteboardStore = create<WhiteboardState>((set, get) => ({
   selection: { selectedIds: new Set(), isDragging: false, selectionRect: null },
+
+   setSelectionDragging: (isDragging: boolean) =>
+    set((state) => ({
+      selection: { ...state.selection, isDragging },
+    })),
 
   selectSingle: (id) =>
     set((state) => ({

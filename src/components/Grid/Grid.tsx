@@ -43,7 +43,7 @@ export const Grid: React.FC<GridProps> = ({
   });
 
   return (
-    <g id="grid">
+    <div id="grid">
       {columns.map((colChildren, colIndex) => {
         let yOffset = COLUMNSOFFSET[colIndex] ?? 0;
 
@@ -71,6 +71,6 @@ export const Grid: React.FC<GridProps> = ({
           </g>
         );
       })}
-    </g>
+    </div>
   );
 };
