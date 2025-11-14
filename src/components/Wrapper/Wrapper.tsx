@@ -18,13 +18,13 @@ export type WrapperProps = {
   className?: string;
 };
 
-const Whiteboard = dynamic(
-  () =>
-    import("@/components/Whiteboard/Whiteboard").then(
-      (mod) => mod.Whiteboard
-    ),
-  { ssr: false }
-);
+// const Whiteboard = dynamic(
+//   () =>
+//     import("@/components/Whiteboard/Whiteboard").then(
+//       (mod) => mod.Whiteboard
+//     ),
+//   { ssr: false }
+// );
 
 const leftsideImage = "/images/LeftSideBar.png";
 const ComposerImage = "/images/Composer.png";
@@ -89,7 +89,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
         </motion.div>
       </div>
 
-      <motion.div
+      {/* <motion.div
         className={css.whiteboard_div}
         initial={{ opacity: 0, filter: "blur(10px)" }}
         animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -99,7 +99,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
         }}
       >
         <Whiteboard frames={images}/>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 };
