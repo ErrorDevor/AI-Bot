@@ -90,7 +90,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
           ease: [0.25, 0.1, 0.25, 1],
         }}
       >
-        {/* <Whiteboard frames={images}/> */}
+        <Whiteboard frames={images}/>
       </motion.div>
     </div>
   );
