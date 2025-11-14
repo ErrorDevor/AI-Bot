@@ -3,28 +3,20 @@
 import React from "react";
 
 import { motion } from "motion/react";
-import dynamic from "next/dynamic";
+
 import clsx from "clsx";
 import { Folders } from "@/widgets/Folders/Folder";
 import { LeftSideBar } from "@/widgets/LeftSideBar/LeftSideBar";
 import { ComposerBar } from "@/widgets/ComposerBar/ComposerBar";
 import { ActionBar } from "@/widgets/ActionBar/ActionBar";
 import { mockData } from "@/shared/data/mockData";
-// import { Whiteboard } from "@/components/Whiteboard/Whiteboard";
+import { Whiteboard } from "../Whiteboard/Whiteboard";
 
 import css from "./Wrapper.module.scss";
 
 export type WrapperProps = {
   className?: string;
 };
-
-// const Whiteboard = dynamic(
-//   () =>
-//     import("@/components/Whiteboard/Whiteboard").then(
-//       (mod) => mod.Whiteboard
-//     ),
-//   { ssr: false }
-// );
 
 const leftsideImage = "/images/LeftSideBar.png";
 const ComposerImage = "/images/Composer.png";
@@ -89,7 +81,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
         </motion.div>
       </div>
 
-      {/* <motion.div
+      <motion.div
         className={css.whiteboard_div}
         initial={{ opacity: 0, filter: "blur(10px)" }}
         animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -98,8 +90,8 @@ export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
           ease: [0.25, 0.1, 0.25, 1],
         }}
       >
-        <Whiteboard frames={images}/>
-      </motion.div> */}
+        {/* <Whiteboard frames={images}/> */}
+      </motion.div>
     </div>
   );
 };
