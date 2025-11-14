@@ -20,7 +20,7 @@ export type WrapperProps = {
 
 const Whiteboard = dynamic(
   () =>
-    import("@/components/Whiteboard/Whiteboard").then((mod) => mod.Whiteboard),
+    import("../Whiteboard/Whiteboard").then((mod) => mod.Whiteboard),
   { ssr: false }
 );
 
