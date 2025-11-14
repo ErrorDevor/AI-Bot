@@ -67,7 +67,7 @@ export const Frame: React.FC<FrameProps> = ({
           userSelect: "none",
           pointerEvents: showImage ? "auto" : "none",
           opacity: showImage ? 1 : 0,
-          transition: "opacity 0.35s ease",
+          transition: "opacity 0.15s ease, transform 0.15s ease-in-out",
         }}
       />
     </div>
