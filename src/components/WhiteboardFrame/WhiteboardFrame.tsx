@@ -22,6 +22,8 @@ export const WhiteboardFrame: React.FC<WhiteboardProps> = ({ frames = [] }) => {
   const [mounted, setMounted] = useState(false);
   const customShapeUtils = [FrameShape];
 
+  const TLDRAW_LICENSE_KEY = "tldraw-2026-02-22/WyIwN2VYYXhaSSIsWyIqIl0sMTYsIjIwMjYtMDItMjIiXQ.RRkit6PfOSg2Fc7zAOjwPq2aiRiRKiinhnjXYpOqN01wfIDIa5Thisthq97k/YTaRyhlHcKhngtLZspX27n3PQ"
+
   // useEffect(() => {
   //   localStorage.clear();
   //   whiteboardStore.setState({ frames: [], zoom: 1, panX: 0, panY: 0 });
@@ -41,6 +43,7 @@ export const WhiteboardFrame: React.FC<WhiteboardProps> = ({ frames = [] }) => {
           <Tldraw
             hideUi
             shapeUtils={customShapeUtils}
+            licenseKey={TLDRAW_LICENSE_KEY}
             onMount={(editor) => {
               editorRef.current = editor;
               setMounted(true);
