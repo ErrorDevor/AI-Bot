@@ -9,7 +9,7 @@ import { LeftSideBar } from "@/widgets/LeftSideBar/LeftSideBar";
 import { ComposerBar } from "@/widgets/ComposerBar/ComposerBar";
 import { ActionBar } from "@/widgets/ActionBar/ActionBar";
 import { mockData } from "@/shared/data/mockData";
-import { Whiteboard } from "../Whiteboard/Whiteboard";
+import { Whiteboard } from "@/components/Whiteboard/Whiteboard";
 
 import css from "./Wrapper.module.scss";
 
