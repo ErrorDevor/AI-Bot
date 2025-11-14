@@ -15,7 +15,7 @@ interface WhiteboardProps {
   frames?: string[];
 }
 
-export const Whiteboard: React.FC<WhiteboardProps> = ({ frames = [] }) => {
+export const WhiteboardFrame: React.FC<WhiteboardProps> = ({ frames = [] }) => {
   const editorRef = useRef<any>(null);
   const restoredIdsRef = useRef<Set<string>>(new Set());
   const initializedRef = useRef(false);

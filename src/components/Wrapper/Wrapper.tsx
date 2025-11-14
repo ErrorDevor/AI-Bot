@@ -10,7 +10,7 @@ import { LeftSideBar } from "@/widgets/LeftSideBar/LeftSideBar";
 import { ComposerBar } from "@/widgets/ComposerBar/ComposerBar";
 import { ActionBar } from "@/widgets/ActionBar/ActionBar";
 import { mockData } from "@/shared/data/mockData";
-import { Whiteboard } from "../Whiteboard/Whiteboard";
+import { WhiteboardFrame } from "../WhiteboardFrame/WhiteboardFrame";
 
 import css from "./Wrapper.module.scss";
 
@@ -90,7 +90,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
           ease: [0.25, 0.1, 0.25, 1],
         }}
       >
-        <Whiteboard frames={images}/>
+        <WhiteboardFrame frames={images}/>
       </motion.div>
     </div>
   );
