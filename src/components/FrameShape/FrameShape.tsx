@@ -24,8 +24,12 @@ export class FrameShape extends BaseBoxShapeUtil<IFrameShape> {
   fixedSize = true;
 
   override canEdit() {
-    return true;
-  }
+		return false
+	}
+  
+	override canResize() {
+		return true
+	}
 
   getDefaultProps(): IFrameShape["props"] {
     return { w: 180, h: 180, src: "/images/Gallery/img1.png" };

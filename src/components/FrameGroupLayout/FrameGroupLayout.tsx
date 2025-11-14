@@ -20,6 +20,7 @@ export const FrameGroupLayout: React.FC<FrameGroupLayoutProps> = ({
     const GAP = 6;
     const START_X = 100;
     const START_Y = 100;
+    const COLUMN_OFFSETS = [380, 200, 0, 50, 300, 600];
 
     const existingIds: string[] = Array.isArray(editor.__layoutGridIds)
       ? editor.__layoutGridIds
@@ -35,8 +36,10 @@ export const FrameGroupLayout: React.FC<FrameGroupLayoutProps> = ({
     frames.forEach((src, i) => {
       const col = i % COLUMNS;
       const row = Math.floor(i / COLUMNS);
+
+      const offsetY = COLUMN_OFFSETS[col] ?? 0;
       const x = START_X + col * (ITEM_W + GAP);
-      const y = START_Y + row * (ITEM_H + GAP);
+      const y = START_Y + row * (ITEM_H + GAP) + offsetY;
 
       try {
         const shape = editor.createShape({
