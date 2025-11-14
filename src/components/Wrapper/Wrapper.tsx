@@ -3,13 +3,14 @@
 import React from "react";
 
 import { motion } from "motion/react";
+import dynamic from "next/dynamic";
 import clsx from "clsx";
 import { Folders } from "@/widgets/Folders/Folder";
 import { LeftSideBar } from "@/widgets/LeftSideBar/LeftSideBar";
 import { ComposerBar } from "@/widgets/ComposerBar/ComposerBar";
 import { ActionBar } from "@/widgets/ActionBar/ActionBar";
 import { mockData } from "@/shared/data/mockData";
-import { Whiteboard } from "@/components/Whiteboard/Whiteboard";
+// import { Whiteboard } from "@/components/Whiteboard/Whiteboard";
 
 import css from "./Wrapper.module.scss";
 
@@ -17,11 +18,16 @@ export type WrapperProps = {
   className?: string;
 };
 
+const Whiteboard = dynamic(
+  () =>
+    import("@/components/Whiteboard/Whiteboard").then((mod) => mod.Whiteboard),
+  { ssr: false }
+);
+
 const leftsideImage = "/images/LeftSideBar.png";
 const ComposerImage = "/images/Composer.png";
 
 export const Wrapper: React.FC<WrapperProps> = ({ className }) => {
-  const folders = mockData.folders;
   const images = mockData.images;
 
   return (
