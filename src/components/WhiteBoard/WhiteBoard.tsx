@@ -2,12 +2,12 @@
 
 import React, { useRef, useState, useEffect } from "react";
 
-// import { Tldraw, TLShapeId } from "tldraw";
-// import "tldraw/tldraw.css";
+import { Tldraw, TLShapeId } from "tldraw";
+import "tldraw/tldraw.css";
 
-// import { FrameShape } from "@/components/FrameShape/FrameShape";
-// import { FrameGroupLayout } from "../FrameGroupLayout/FrameGroupLayout";
-// import { whiteboardStore, FrameState } from "@/utils/state/state";
+import { FrameShape } from "@/components/FrameShape/FrameShape";
+import { FrameGroupLayout } from "../FrameGroupLayout/FrameGroupLayout";
+import { whiteboardStore, FrameState } from "@/utils/state/state";
 
 import css from "./Whiteboard.module.scss";
 
@@ -16,29 +16,29 @@ interface WhiteboardProps {
 }
 
 export const Whiteboard: React.FC<WhiteboardProps> = ({ frames = [] }) => {
-  // const editorRef = useRef<any>(null);
-  // const restoredIdsRef = useRef<Set<string>>(new Set());
-  // const initializedRef = useRef(false);
-  // const [mounted, setMounted] = useState(false);
-  // const customShapeUtils = [FrameShape];
+  const editorRef = useRef<any>(null);
+  const restoredIdsRef = useRef<Set<string>>(new Set());
+  const initializedRef = useRef(false);
+  const [mounted, setMounted] = useState(false);
+  const customShapeUtils = [FrameShape];
 
   // useEffect(() => {
   //   localStorage.clear();
   //   whiteboardStore.setState({ frames: [], zoom: 1, panX: 0, panY: 0 });
   // }, []);
 
-  // useEffect(() => {
-  //   const unsubscribe = whiteboardStore.subscribe((state) => {
-  //     localStorage.setItem("whiteboard-state", JSON.stringify(state));
-  //   });
-  //   return () => unsubscribe();
-  // }, []);
+  useEffect(() => {
+    const unsubscribe = whiteboardStore.subscribe((state) => {
+      localStorage.setItem("whiteboard-state", JSON.stringify(state));
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className={css.whiteboard}>
       <div className="tldraw__editor">
         <div className={css.tldraw_container}>
-          {/* <Tldraw
+          <Tldraw
             hideUi
             shapeUtils={customShapeUtils}
             onMount={(editor) => {
@@ -124,7 +124,7 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ frames = [] }) => {
                 pointerEvents: "none",
               }}
             />
-          </Tldraw> */}
+          </Tldraw>
         </div>
       </div>
     </div>
